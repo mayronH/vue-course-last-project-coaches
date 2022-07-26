@@ -10,29 +10,34 @@ const routes = [
   {
     path: '/coaches',
     name: 'Coaches',
-    component: () => null,
+    component: () =>
+      import(/* webpackChunkName: "coaches" */ '../views/CoachesView.vue'),
   },
   {
     path: '/coaches/:id',
     name: 'Coach',
-    component: () => null,
+    component: () =>
+      import(/* webpackChunkName: "coach" */ '../views/CoachView.vue'),
     children: [
       {
         path: '/contact',
         name: 'Contact',
-        component: () => null,
+        component: () =>
+          import(/* webpackChunkName: "contact" */ '../views/ContactView.vue'),
       },
     ],
   },
   {
     path: '/signup',
     name: 'SignUp',
-    component: () => null,
+    component: () =>
+      import(/* webpackChunkName: "signup" */ '../views/SignUp.vue'),
   },
   {
     path: '/requests',
     name: 'Requests',
-    component: () => null,
+    component: () =>
+      import(/* webpackChunkName: "requests" */ '../views/RequestsView.vue'),
   },
 
   // 404 Page
