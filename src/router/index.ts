@@ -7,6 +7,33 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "home" */ '../views/HomeView.vue'),
   },
+  {
+    path: '/coaches',
+    name: 'Coaches',
+    component: () => null,
+  },
+  {
+    path: '/coaches/:id',
+    name: 'Coach',
+    component: () => null,
+    children: [
+      {
+        path: '/contact',
+        name: 'Contact',
+        component: () => null,
+      },
+    ],
+  },
+  {
+    path: '/signup',
+    name: 'SignUp',
+    component: () => null,
+  },
+  {
+    path: '/requests',
+    name: 'Requests',
+    component: () => null,
+  },
 
   // 404 Page
   {
