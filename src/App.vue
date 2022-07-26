@@ -40,6 +40,36 @@ main.content p {
   text-align: justify;
 }
 
+.badges {
+  display: flex;
+  justify-content: space-evenly;
+  gap: var(--small-size-fluid);
+}
+.badges span {
+  padding: var(--extra-small-size-fluid);
+
+  box-shadow: var(--box-shadow);
+
+  font-weight: 500;
+
+  background-color: var(--bg-medium);
+}
+.badges span.frontend {
+  background-color: var(--accent);
+
+  color: var(--bg-dark);
+}
+.badges span.backend {
+  background-color: var(--accent2);
+
+  color: var(--bg-dark);
+}
+.badges span.career {
+  background-color: var(--accent3);
+
+  color: var(--bg-dark);
+}
+
 @media screen and (min-width: 768px) {
   main.content p {
     text-align: left;

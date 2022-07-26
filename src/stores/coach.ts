@@ -25,4 +25,11 @@ export const useCoachStore = defineStore('coach', {
     ] as Array<Coach>,
     currentCoach: [] as Array<Coach>,
   }),
+  actions: {
+    getCurrentCoach(id: string | string[]) {
+      this.currentCoach = this.coaches.filter((coach: Coach) => {
+        return coach.id === id
+      })
+    },
+  },
 })
