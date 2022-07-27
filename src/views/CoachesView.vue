@@ -1,12 +1,25 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { useCoachStore } from '../stores/coach'
+
 import CoachItem from '../components/CoachItem.vue'
-import { computed } from 'vue'
+import CoachFilter from '../components/CoachFilter.vue'
 
 const coachStore = useCoachStore()
+const activeFilter = ref('')
+
+function setFilter(filter: string) {
+  activeFilter.value = filter
+}
 
 const filteredCoaches = computed(() => {
-  return coachStore.coaches
+  const coaches = coachStore.coaches
+  if (activeFilter.value === '' || activeFilter.value === 'clear') {
+    return coaches
+  }
+  return coaches.filter((coach) => {
+    if (coach.areas.includes(activeFilter.value)) return true
+  })
 })
 
 const isEmpty = computed(() => {
@@ -16,8 +29,11 @@ const isEmpty = computed(() => {
 
 <template>
   <main class="content">
-    <section class="filter"></section>
-    <div class="coaches">
+    <section class="actions">
+      <div class="filter">
+        <CoachFilter @change-filter="setFilter"></CoachFilter>
+      </div>
+
       <div class="controls">
         <button>
           <svg
@@ -37,6 +53,9 @@ const isEmpty = computed(() => {
           Refresh
         </button>
       </div>
+    </section>
+
+    <div class="coaches">
       <section v-if="isEmpty" class="list">
         <CoachItem
           v-for="coach in filteredCoaches"
@@ -44,6 +63,7 @@ const isEmpty = computed(() => {
           :coach="coach"
         ></CoachItem>
       </section>
+
       <section v-else class="empty">
         <svg
           width="100px"
@@ -88,9 +108,15 @@ const isEmpty = computed(() => {
 </template>
 
 <style scoped>
-/* main.content {
-  grid-template-rows: 1fr 5fr;
-} */
+.actions {
+  display: flex;
+  justify-content: right;
+  gap: 1rem;
+
+  width: 100%;
+
+  padding-block: var(--small-size-fluid);
+}
 
 .coaches {
   width: 100%;
@@ -103,15 +129,6 @@ const isEmpty = computed(() => {
   gap: var(--medium-size-fluid);
 }
 
-.controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-
-  padding-block: var(--extra-small-size-fluid);
-}
 .controls button {
   display: flex;
   align-items: center;
@@ -143,9 +160,6 @@ const isEmpty = computed(() => {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--small-size-fluid);
     align-items: stretch;
-  }
-  .controls {
-    justify-content: right;
   }
 }
 </style>
