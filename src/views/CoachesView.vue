@@ -130,21 +130,9 @@ const isEmpty = computed(() => {
 }
 
 .controls button {
-  display: flex;
-  align-items: center;
   gap: var(--extra-small-size-fluid);
 
-  padding: 0.5rem;
-
-  background-color: var(--bg-lighter);
-
-  border: none;
   border-bottom: 2px solid var(--accent2);
-
-  box-shadow: var(--box-shadow);
-
-  color: var(--white);
-  font-size: 1rem;
 }
 .controls svg {
   width: 1rem;

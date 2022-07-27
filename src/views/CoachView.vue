@@ -58,6 +58,8 @@ onBeforeMount(() => getCurrentCoach())
   background-color: var(--bg-medium);
 
   padding: var(--medium-size-fluid);
+
+  width: 100%;
 }
 footer {
   display: flex;

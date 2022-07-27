@@ -70,6 +70,24 @@ main.content p {
   color: var(--bg-dark);
 }
 
+button {
+  display: flex;
+  align-items: center;
+
+  padding: 0.5rem;
+
+  background-color: var(--bg-lighter);
+
+  border: none;
+
+  box-shadow: var(--box-shadow);
+
+  color: var(--white);
+  font-size: 1rem;
+
+  cursor: pointer;
+}
+
 @media screen and (min-width: 768px) {
   main.content p {
     text-align: left;

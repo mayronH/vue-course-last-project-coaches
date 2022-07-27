@@ -31,5 +31,9 @@ export const useCoachStore = defineStore('coach', {
         return coach.id === id
       })
     },
+    addCoach(coach: Coach) {
+      coach.id = new Date().toISOString()
+      this.coaches.push(coach)
+    },
   },
 })
