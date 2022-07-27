@@ -57,11 +57,13 @@ const isEmpty = computed(() => {
 
     <div class="coaches">
       <section v-if="isEmpty" class="list">
-        <CoachItem
-          v-for="coach in filteredCoaches"
-          :key="coach.id"
-          :coach="coach"
-        ></CoachItem>
+        <TransitionGroup name="coach-list" appear>
+          <CoachItem
+            v-for="coach in filteredCoaches"
+            :key="coach.id"
+            :coach="coach"
+          ></CoachItem>
+        </TransitionGroup>
       </section>
 
       <section v-else class="empty">
@@ -142,6 +144,22 @@ const isEmpty = computed(() => {
 .empty {
   text-align: center;
 }
+
+.coach-list-enter-from,
+.coach-list-leave-to {
+  opacity: 0;
+}
+.coach-list-enter-active,
+.coach-list-leave-active {
+  transition: all 0.8s ease;
+}
+.coach-list-leave-active {
+  position: absolute;
+}
+.coach-list-move {
+  transition: all 0.4s ease;
+}
+
 @media screen and (min-width: 768px) {
   .list {
     display: grid;
