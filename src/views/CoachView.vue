@@ -40,6 +40,7 @@ onBeforeMount(() => getCurrentCoach())
           </div>
         </footer>
       </section>
+
       <section class="contact">
         <h3>Contact the Coach</h3>
         <RouterView />

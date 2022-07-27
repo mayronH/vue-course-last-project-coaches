@@ -24,6 +24,7 @@ const fullName = computed(() => {
         <h2>{{ fullName }}</h2>
         <small class="hour">${{ props.coach.hourlyRate }}/hour</small>
       </header>
+
       <footer>
         <div class="badges">
           <span v-for="area in props.coach.areas" :key="area" :class="area">{{
