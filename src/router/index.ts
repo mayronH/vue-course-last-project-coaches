@@ -20,7 +20,7 @@ const routes = [
       import(/* webpackChunkName: "coach" */ '../views/CoachView.vue'),
     children: [
       {
-        path: '/contact',
+        path: 'contact',
         name: 'Contact',
         component: () =>
           import(/* webpackChunkName: "contact" */ '../views/ContactView.vue'),
