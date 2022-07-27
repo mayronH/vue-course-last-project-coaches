@@ -88,6 +88,69 @@ button {
   cursor: pointer;
 }
 
+.form {
+  background-color: var(--bg-lighter);
+
+  border-top: 5px solid var(--accent2);
+
+  padding: var(--medium-size-fluid);
+
+  width: 100%;
+}
+
+.buttons button {
+  background-color: var(--accent2);
+  padding: 0.5rem var(--small-size-fluid);
+
+  margin-left: auto;
+}
+
+.error {
+  font-weight: 300;
+  color: var(--accent);
+  text-transform: lowercase;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+
+  margin-bottom: var(--small-size-fluid);
+}
+.inline-input {
+  display: flex;
+  flex-direction: row;
+  gap: var(--extra-small-size-fluid);
+
+  margin-bottom: var(--small-size-fluid);
+}
+.inline-input div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+label {
+  color: var(--grey);
+}
+input[type='text'],
+input[type='email'],
+input[type='number'],
+textarea {
+  color: var(--white);
+  background-color: var(--bg-medium);
+  border: none;
+  padding: 0.25rem var(--extra-small-size-fluid);
+  width: 100%;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+  outline-color: var(--accent);
+}
+
 @media screen and (min-width: 768px) {
   main.content p {
     text-align: left;

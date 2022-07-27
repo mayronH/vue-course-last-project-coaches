@@ -6,3 +6,10 @@ export type Coach = {
   description: string
   hourlyRate: number
 }
+
+export type Request = {
+  id: string
+  email: string
+  message: string
+  coachId: string | string[]
+}

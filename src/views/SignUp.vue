@@ -29,7 +29,7 @@ const rules = computed(() => {
   }
 })
 
-const v$ = useVuelidate(rules, coach.value)
+const v$ = useVuelidate(rules, coach)
 
 async function saveCoach() {
   const result = await v$.value.$validate()
@@ -60,8 +60,9 @@ async function saveCoach() {
           v-for="error in v$.firstName.$errors"
           :key="error.$uid"
           class="error"
-          >{{ error.$message }}</span
         >
+          {{ error.$message }}
+        </span>
       </div>
 
       <div class="input">
@@ -71,8 +72,9 @@ async function saveCoach() {
           v-for="error in v$.lastName.$errors"
           :key="error.$uid"
           class="error"
-          >{{ error.$message }}</span
         >
+          {{ error.$message }}
+        </span>
       </div>
 
       <div class="input">
@@ -82,8 +84,9 @@ async function saveCoach() {
           v-for="error in v$.description.$errors"
           :key="error.$uid"
           class="error"
-          >{{ error.$message }}</span
         >
+          {{ error.$message }}
+        </span>
       </div>
 
       <h3>Specialization Area</h3>
@@ -117,12 +120,9 @@ async function saveCoach() {
             type="checkbox"
           />
         </div>
-        <span
-          v-for="error in v$.areas.$errors"
-          :key="error.$uid"
-          class="error"
-          >{{ error.$message }}</span
-        >
+        <span v-for="error in v$.areas.$errors" :key="error.$uid" class="error">
+          {{ error.$message }}
+        </span>
       </div>
 
       <div class="input">
@@ -132,8 +132,9 @@ async function saveCoach() {
           v-for="error in v$.hourlyRate.$errors"
           :key="error.$uid"
           class="error"
-          >{{ error.$message }}</span
         >
+          {{ error.$message }}
+        </span>
       </div>
 
       <div class="buttons">
@@ -147,65 +148,5 @@ async function saveCoach() {
 h2,
 h3 {
   margin-bottom: var(--extra-small-size-fluid);
-}
-.form {
-  background-color: var(--bg-lighter);
-
-  border-top: 5px solid var(--accent2);
-
-  padding: var(--medium-size-fluid);
-
-  width: 100%;
-}
-.input {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: 100%;
-
-  margin-bottom: var(--small-size-fluid);
-}
-.inline-input {
-  display: flex;
-  flex-direction: row;
-  gap: var(--extra-small-size-fluid);
-
-  margin-bottom: var(--small-size-fluid);
-}
-.inline-input div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-label {
-  color: var(--grey);
-}
-input[type='text'],
-input[type='number'],
-textarea {
-  color: var(--white);
-  background-color: var(--bg-medium);
-  border: none;
-  padding: 0.25rem var(--extra-small-size-fluid);
-  width: 100%;
-}
-
-input:focus-visible,
-textarea:focus-visible {
-  outline-color: var(--accent);
-}
-
-button {
-  background-color: var(--accent2);
-  padding: 0.5rem var(--small-size-fluid);
-
-  margin-left: auto;
-}
-
-.error {
-  font-weight: 300;
-  color: var(--accent);
-  text-transform: lowercase;
 }
 </style>
