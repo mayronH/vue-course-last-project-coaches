@@ -32,13 +32,13 @@ main.content {
   padding-inline: var(--medium-size-fluid);
 }
 
-main.content p {
+/* main.content p {
   line-height: 2rem;
 
   margin-bottom: var(--small-size-fluid);
 
   text-align: justify;
-}
+} */
 
 .badges {
   display: flex;
@@ -151,9 +151,17 @@ textarea:focus-visible {
   outline-color: var(--accent);
 }
 
+textarea {
+  resize: vertical;
+}
+
+.empty {
+  text-align: center;
+}
+
 @media screen and (min-width: 768px) {
-  main.content p {
+  /* main.content p {
     text-align: left;
-  }
+  } */
 }
 </style>

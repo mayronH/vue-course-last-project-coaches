@@ -78,10 +78,18 @@ onMounted(() => {
 
           <li role="none">
             <RouterLink
+              v-if="false"
               :to="{ name: 'SignUp' }"
               role="menuitem"
               class="nav-link"
               >Sign Up</RouterLink
+            >
+            <RouterLink
+              v-else
+              :to="{ name: 'Requests' }"
+              role="menuitem"
+              class="nav-link"
+              >Requests</RouterLink
             >
           </li>
         </ul>

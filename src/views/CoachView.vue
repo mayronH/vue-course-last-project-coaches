@@ -86,6 +86,13 @@ onBeforeMount(() => getCurrentCoach())
 
   width: 100%;
 }
+p {
+  line-height: 2rem;
+
+  margin-bottom: var(--small-size-fluid);
+
+  text-align: justify;
+}
 footer {
   display: flex;
   justify-content: center;

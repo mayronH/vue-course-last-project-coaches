@@ -141,10 +141,6 @@ const isEmpty = computed(() => {
   height: 1rem;
 }
 
-.empty {
-  text-align: center;
-}
-
 .coach-list-enter-from,
 .coach-list-leave-to {
   opacity: 0;
