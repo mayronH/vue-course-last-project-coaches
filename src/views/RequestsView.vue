@@ -1,26 +1,24 @@
 <script setup lang="ts">
 import { useRequestStore } from '../stores/request'
 import RequestItem from '../components/RequestItem.vue'
-import { computed } from 'vue'
+import { computed, onBeforeMount } from 'vue'
+import BaseSpinner from '../components/BaseSpinner.vue'
 
 const requestStore = useRequestStore()
 
 const isEmpty = computed(() => {
   return requestStore.requests.length > 0
 })
+
+onBeforeMount(async () => {
+  await requestStore.loadRequests()
+})
 </script>
 
 <template>
   <main class="content">
-    <div v-if="isEmpty" class="requests">
-      <h2>Requests Received</h2>
-      <RequestItem
-        v-for="request in requestStore.requests"
-        :key="request.id"
-        :request="request"
-      ></RequestItem>
-    </div>
-    <div v-else class="empty">
+    <BaseSpinner v-if="requestStore.isLoading"></BaseSpinner>
+    <div v-else-if="!isEmpty" class="empty">
       <svg
         width="100px"
         height="100px"
@@ -58,6 +56,14 @@ const isEmpty = computed(() => {
         />
       </svg>
       <h3>You haven't received any request yet</h3>
+    </div>
+    <div v-else class="requests">
+      <h2>Requests Received</h2>
+      <RequestItem
+        v-for="request in requestStore.requests"
+        :key="request.id"
+        :request="request"
+      ></RequestItem>
     </div>
   </main>
 </template>
