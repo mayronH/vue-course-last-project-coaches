@@ -4,6 +4,7 @@ import { useCoachStore } from '../stores/coach'
 
 import CoachItem from '../components/CoachItem.vue'
 import CoachFilter from '../components/CoachFilter.vue'
+import BaseSpinner from '../components/BaseSpinner.vue'
 
 const coachStore = useCoachStore()
 const activeFilter = ref('')
@@ -11,7 +12,6 @@ const activeFilter = ref('')
 function setFilter(filter: string) {
   activeFilter.value = filter
 }
-
 const filteredCoaches = computed(() => {
   const coaches = coachStore.coaches
   if (activeFilter.value === '' || activeFilter.value === 'clear') {
@@ -29,8 +29,9 @@ const isEmpty = computed(() => {
 async function refreshCoaches() {
   await coachStore.loadCoaches()
 }
-
-onBeforeMount(() => coachStore.loadCoaches)
+onBeforeMount(async () => {
+  await refreshCoaches()
+})
 </script>
 
 <template>
@@ -61,7 +62,8 @@ onBeforeMount(() => coachStore.loadCoaches)
       </div>
     </section>
 
-    <div class="coaches">
+    <BaseSpinner v-if="coachStore.isLoading"></BaseSpinner>
+    <div v-else class="coaches">
       <section v-if="isEmpty" class="list">
         <TransitionGroup name="coach-list" appear>
           <CoachItem

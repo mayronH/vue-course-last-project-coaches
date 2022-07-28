@@ -8,6 +8,7 @@ export const useCoachStore = defineStore('coach', {
     currentCoach: [] as Array<Coach>,
     loggedInCoach: {} as Coach,
     isLoggedIn: false,
+    isLoading: false,
   }),
   actions: {
     getCurrentCoach(id: string | string[]) {
@@ -15,11 +16,12 @@ export const useCoachStore = defineStore('coach', {
         return coach.id === id
       })
     },
-    addCoach(coach: Coach) {
+    async addCoach(coach: Coach) {
       coach.id = new Date().toISOString()
-      axios
-        .post(
-          'https://coaches-vue-36fb0-default-rtdb.firebaseio.com//coaches.json',
+      this.isLoading = true
+      try {
+        const response = await axios.post(
+          'https://coaches-vue-36fb0-default-rtdb.firebaseio.com/coaches/coaches.json',
           {
             id: coach.id,
             firstName: coach.firstName,
@@ -29,25 +31,14 @@ export const useCoachStore = defineStore('coach', {
             hourlyRate: coach.hourlyRate,
           }
         )
-        .then((response) => {
-          if (response.status !== 200) throw new Error('Could not save data')
-          if (response.status === 200) {
-            this.isLoggedIn = true
-            this.coaches.push(coach)
-            this.loggedInCoach = coach
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-          return false
-        })
-    },
-    async loadCoaches() {
-      try {
-        const response = await axios.get(
-          'https://coaches-vue-36fb0-default-rtdb.firebaseio.com//coaches.json'
-        )
-        this.coaches = Object.values(response.data)
+        if (response.status !== 200) throw new Error('Could not save data')
+        if (response.status === 200) {
+          this.isLoggedIn = true
+          this.coaches.push(coach)
+          this.loggedInCoach = coach
+
+          this.isLoading = false
+        }
       } catch (err) {
         const error = err as AxiosError
         if (!axios.isAxiosError(error)) {
@@ -55,6 +46,29 @@ export const useCoachStore = defineStore('coach', {
         } else {
           console.log(error.message)
         }
+        return false
+      }
+    },
+    async loadCoaches() {
+      this.isLoading = true
+      try {
+        const response = await axios.get(
+          'https://coaches-vue-36fb0-default-rtdb.firebaseio.com/coaches/coaches.json'
+        )
+        if (response.status === 200 && response.data !== null) {
+          this.coaches = Object.values(response.data)
+
+          this.isLoading = false
+        }
+        if (response.status !== 200) throw new Error('Could not load data')
+      } catch (err) {
+        const error = err as AxiosError
+        if (!axios.isAxiosError(error)) {
+          console.log(error)
+        } else {
+          console.log(error.message)
+        }
+        return false
       }
     },
   },

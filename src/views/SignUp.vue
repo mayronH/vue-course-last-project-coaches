@@ -34,8 +34,7 @@ const v$ = useVuelidate(rules, coach)
 async function saveCoach() {
   const result = await v$.value.$validate()
   if (result) {
-    // alert('Form successfully submitted.')
-    coachStore.addCoach(coach.value)
+    await coachStore.addCoach(coach.value)
     router.push({ name: 'Coaches' })
   }
 }
