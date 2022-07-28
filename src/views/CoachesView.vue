@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 import { useCoachStore } from '../stores/coach'
 
 import CoachItem from '../components/CoachItem.vue'
@@ -25,6 +25,12 @@ const filteredCoaches = computed(() => {
 const isEmpty = computed(() => {
   return filteredCoaches.value.length > 0
 })
+
+async function refreshCoaches() {
+  await coachStore.loadCoaches()
+}
+
+onBeforeMount(() => coachStore.loadCoaches)
 </script>
 
 <template>
@@ -35,7 +41,7 @@ const isEmpty = computed(() => {
       </div>
 
       <div class="controls">
-        <button>
+        <button @click="refreshCoaches">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6"

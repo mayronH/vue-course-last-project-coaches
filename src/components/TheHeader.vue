@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useCoachStore } from '../stores/coach'
 
 const navBtn = ref()
 
@@ -17,6 +18,8 @@ onMounted(() => {
     })
   }
 })
+
+const coachStore = useCoachStore()
 </script>
 
 <template>
@@ -78,7 +81,7 @@ onMounted(() => {
 
           <li role="none">
             <RouterLink
-              v-if="false"
+              v-if="!coachStore.isLoggedIn"
               :to="{ name: 'SignUp' }"
               role="menuitem"
               class="nav-link"

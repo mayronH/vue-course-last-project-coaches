@@ -1,29 +1,13 @@
 import { defineStore } from 'pinia'
 import { Coach } from '../types'
+import axios, { AxiosError } from 'axios'
 
 export const useCoachStore = defineStore('coach', {
   state: () => ({
-    coaches: [
-      {
-        id: 'c1',
-        firstName: 'Maximilian',
-        lastName: 'Schwarzmüller',
-        areas: ['frontend', 'backend', 'career'],
-        description:
-          "I'm Maximilian and I've worked as a freelance web developer for years. Let me help you become a developer as well!",
-        hourlyRate: 30,
-      },
-      {
-        id: 'c2',
-        firstName: 'Julie',
-        lastName: 'Jones',
-        areas: ['frontend', 'career'],
-        description:
-          'I am Julie and as a senior developer in a big tech company, I can help you get your first job or progress in your current role.',
-        hourlyRate: 30,
-      },
-    ] as Array<Coach>,
+    coaches: [] as Array<Coach>,
     currentCoach: [] as Array<Coach>,
+    loggedInCoach: {} as Coach,
+    isLoggedIn: false,
   }),
   actions: {
     getCurrentCoach(id: string | string[]) {
@@ -33,7 +17,45 @@ export const useCoachStore = defineStore('coach', {
     },
     addCoach(coach: Coach) {
       coach.id = new Date().toISOString()
-      this.coaches.push(coach)
+      axios
+        .post(
+          'https://coaches-vue-36fb0-default-rtdb.firebaseio.com//coaches.json',
+          {
+            id: coach.id,
+            firstName: coach.firstName,
+            lastName: coach.lastName,
+            description: coach.description,
+            areas: coach.areas,
+            hourlyRate: coach.hourlyRate,
+          }
+        )
+        .then((response) => {
+          if (response.status !== 200) throw new Error('Could not save data')
+          if (response.status === 200) {
+            this.isLoggedIn = true
+            this.coaches.push(coach)
+            this.loggedInCoach = coach
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+          return false
+        })
+    },
+    async loadCoaches() {
+      try {
+        const response = await axios.get(
+          'https://coaches-vue-36fb0-default-rtdb.firebaseio.com//coaches.json'
+        )
+        this.coaches = Object.values(response.data)
+      } catch (err) {
+        const error = err as AxiosError
+        if (!axios.isAxiosError(error)) {
+          console.log(error)
+        } else {
+          console.log(error.message)
+        }
+      }
     },
   },
 })
