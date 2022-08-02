@@ -138,6 +138,7 @@ label {
 input[type='text'],
 input[type='email'],
 input[type='number'],
+input[type='password'],
 textarea {
   color: var(--white);
   background-color: var(--bg-medium);

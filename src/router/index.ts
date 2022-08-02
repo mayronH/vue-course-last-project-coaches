@@ -32,7 +32,7 @@ const routes = [
     ],
   },
   {
-    path: '/signup',
+    path: '/coaches/signup',
     name: 'SignUp',
     component: () =>
       import(/* webpackChunkName: "signup" */ '../views/coaches/SignUp.vue'),
@@ -44,6 +44,20 @@ const routes = [
       import(
         /* webpackChunkName: "requests" */ '../views/requests/RequestsView.vue'
       ),
+  },
+  {
+    path: '/user/signup',
+    name: 'UserSignUp',
+    component: () =>
+      import(
+        /* webpackChunkName: "userSignUp" */ '../views/auth/UserSignUp.vue'
+      ),
+  },
+  {
+    path: '/user/login',
+    name: 'UserAuth',
+    component: () =>
+      import(/* webpackChunkName: "userAuth" */ '../views/auth/UserLogin.vue'),
   },
 
   // 404 Page
