@@ -4,8 +4,8 @@ import { required, email } from '@vuelidate/validators'
 
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useRequestStore } from '../stores/request'
-import { Request } from '../types'
+import { useRequestStore } from '../../stores/request'
+import { Request } from '../../types'
 
 const router = useRouter()
 const route = useRoute()

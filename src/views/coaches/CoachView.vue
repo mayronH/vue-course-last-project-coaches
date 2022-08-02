@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { useCoachStore } from '../stores/coach'
-import { Coach } from '../types'
+import { useCoachStore } from '../../stores/coach'
+import { Coach } from '../../types'
 
 const coachStore = useCoachStore()
 const route = useRoute()

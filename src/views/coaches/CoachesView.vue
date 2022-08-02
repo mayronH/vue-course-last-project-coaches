@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, ref } from 'vue'
-import { useCoachStore } from '../stores/coach'
+import { useCoachStore } from '../../stores/coach'
 
-import CoachItem from '../components/CoachItem.vue'
-import CoachFilter from '../components/CoachFilter.vue'
-import BaseSpinner from '../components/BaseSpinner.vue'
+import CoachItem from '../../components/CoachItem.vue'
+import CoachFilter from '../../components/CoachFilter.vue'
+import BaseSpinner from '../../components/BaseSpinner.vue'
 
 const coachStore = useCoachStore()
 const activeFilter = ref('')

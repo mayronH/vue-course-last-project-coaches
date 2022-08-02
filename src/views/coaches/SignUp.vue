@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useCoachStore } from '../stores/coach'
-import { Coach } from '../types'
+import { useCoachStore } from '../../stores/coach'
+import { Coach } from '../../types'
 
 import useVuelidate from '@vuelidate/core'
 import { required, minValue } from '@vuelidate/validators'

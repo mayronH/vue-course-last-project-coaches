@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useRequestStore } from '../stores/request'
-import RequestItem from '../components/RequestItem.vue'
+import { useRequestStore } from '../../stores/request'
+import RequestItem from '../../components/RequestItem.vue'
 import { computed, onBeforeMount } from 'vue'
-import BaseSpinner from '../components/BaseSpinner.vue'
+import BaseSpinner from '../../components/BaseSpinner.vue'
 
 const requestStore = useRequestStore()
 
