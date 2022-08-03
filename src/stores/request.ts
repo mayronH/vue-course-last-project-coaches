@@ -17,7 +17,9 @@ export const useRequestStore = defineStore('request', {
       this.isLoading = true
       try {
         const response = await axios.post(
-          `https://coaches-vue-36fb0-default-rtdb.firebaseio.com/requests/${request.coachId}.json?auth=${authStore.token}`,
+          `${import.meta.env.VITE_FIREBASE_PROJECT_URL}/requests/${
+            request.coachId
+          }.json?auth=${authStore.token}`,
           {
             email: request.email,
             message: request.message,
@@ -42,7 +44,9 @@ export const useRequestStore = defineStore('request', {
       this.isLoading = true
       try {
         const response = await axios.get(
-          `https://coaches-vue-36fb0-default-rtdb.firebaseio.com/requests/${authStore.userId}.json?auth=${authStore.token}`
+          `${import.meta.env.VITE_FIREBASE_PROJECT_URL}/requests/${
+            authStore.userId
+          }.json?auth=${authStore.token}`
         )
 
         if (response.status !== 200) throw new Error('Could not load data')

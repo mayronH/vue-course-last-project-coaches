@@ -22,7 +22,9 @@ export const useCoachStore = defineStore('coach', {
       this.isLoading = true
       try {
         const response = await axios.put(
-          `https://coaches-vue-36fb0-default-rtdb.firebaseio.com/coaches/${coach.id}.json?auth=${authStore.token}`,
+          `${import.meta.env.VITE_FIREBASE_PROJECT_URL}/coaches/${
+            coach.id
+          }.json?auth=${authStore.token}`,
           {
             id: coach.id,
             firstName: coach.firstName,
@@ -52,7 +54,7 @@ export const useCoachStore = defineStore('coach', {
       this.isLoading = true
       try {
         const response = await axios.get(
-          'https://coaches-vue-36fb0-default-rtdb.firebaseio.com/coaches.json'
+          `${import.meta.env.VITE_FIREBASE_PROJECT_URL}/coaches.json`
         )
 
         if (response.status !== 200) throw new Error('Could not load data')

@@ -14,8 +14,11 @@ export const useAuthStore = defineStore('auth', {
       this.isLoading = true
 
       try {
+        //! USE ENVIRONMENT VARIABLE TO STORE KEYS DUMBASS
         const response = await axios.post(
-          'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA9HTEWwgVdgaHFSLHWODa6GAc6f2czg2E',
+          `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${
+            import.meta.env.VITE_FIREBASE_KEY
+          }`,
           {
             email: email,
             password: password,
@@ -51,7 +54,9 @@ export const useAuthStore = defineStore('auth', {
 
       try {
         const response = await axios.post(
-          'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA9HTEWwgVdgaHFSLHWODa6GAc6f2czg2E',
+          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${
+            import.meta.env.VITE_FIREBASE_KEY
+          }`,
           {
             email: email,
             password: password,

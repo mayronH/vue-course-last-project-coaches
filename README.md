@@ -1,0 +1,1 @@
+Copy the .env.example and replace with the firebase project URL and KEY
