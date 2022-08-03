@@ -5,8 +5,10 @@ import { useCoachStore } from '../../stores/coach'
 import CoachItem from '../../components/CoachItem.vue'
 import CoachFilter from '../../components/CoachFilter.vue'
 import BaseSpinner from '../../components/BaseSpinner.vue'
+import { useAuthStore } from '../../stores/auth'
 
 const coachStore = useCoachStore()
+const authStore = useAuthStore()
 const activeFilter = ref('')
 
 function setFilter(filter: string) {
@@ -26,6 +28,15 @@ const isEmpty = computed(() => {
   return filteredCoaches.value.length > 0
 })
 
+const isCoach = computed(() => {
+  coachStore.getCurrentCoach(authStore.userId)
+  const coach = coachStore.currentCoach[0]
+  if (coach) {
+    return true
+  }
+  return false
+})
+
 async function refreshCoaches() {
   await coachStore.loadCoaches()
 }
@@ -42,7 +53,10 @@ onBeforeMount(async () => {
       </div>
 
       <div class="controls">
-        <RouterLink :to="{ name: 'SignUp' }" class="button"
+        <RouterLink
+          v-if="authStore.userId && !isCoach"
+          :to="{ name: 'SignUp' }"
+          class="button"
           >Register as Coach</RouterLink
         >
         <button class="button" @click="refreshCoaches">
