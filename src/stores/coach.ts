@@ -1,13 +1,12 @@
 import { defineStore } from 'pinia'
 import { Coach } from '../types'
 import axios, { AxiosError } from 'axios'
+import { useAuthStore } from './auth'
 
 export const useCoachStore = defineStore('coach', {
   state: () => ({
     coaches: [] as Array<Coach>,
     currentCoach: [] as Array<Coach>,
-    loggedInCoach: {} as Coach,
-    isLoggedIn: false,
     isLoading: false,
   }),
   actions: {
@@ -17,11 +16,13 @@ export const useCoachStore = defineStore('coach', {
       })
     },
     async addCoach(coach: Coach) {
-      coach.id = new Date().toISOString()
+      const authStore = useAuthStore()
+      coach.id = authStore.userId
+
       this.isLoading = true
       try {
-        const response = await axios.post(
-          'https://coaches-vue-36fb0-default-rtdb.firebaseio.com/coaches/coaches.json',
+        const response = await axios.put(
+          `https://coaches-vue-36fb0-default-rtdb.firebaseio.com/coaches/${coach.id}.json?auth=${authStore.token}`,
           {
             id: coach.id,
             firstName: coach.firstName,
@@ -33,9 +34,7 @@ export const useCoachStore = defineStore('coach', {
         )
         if (response.status !== 200) throw new Error('Could not save data')
         if (response.status === 200) {
-          this.isLoggedIn = true
           this.coaches.push(coach)
-          this.loggedInCoach = coach
 
           this.isLoading = false
         }
@@ -53,14 +52,16 @@ export const useCoachStore = defineStore('coach', {
       this.isLoading = true
       try {
         const response = await axios.get(
-          'https://coaches-vue-36fb0-default-rtdb.firebaseio.com/coaches/coaches.json'
+          'https://coaches-vue-36fb0-default-rtdb.firebaseio.com/coaches.json'
         )
+
+        if (response.status !== 200) throw new Error('Could not load data')
+
         if (response.status === 200 && response.data !== null) {
           this.coaches = Object.values(response.data)
-
-          this.isLoading = false
         }
-        if (response.status !== 200) throw new Error('Could not load data')
+
+        this.isLoading = false
       } catch (err) {
         const error = err as AxiosError
         if (!axios.isAxiosError(error)) {

@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
 import { Request } from '../types'
 import axios, { AxiosError } from 'axios'
-import { useCoachStore } from './coach'
+import { useAuthStore } from './auth'
+
+const authStore = useAuthStore()
 
 export const useRequestStore = defineStore('request', {
   state: () => ({
@@ -11,12 +13,12 @@ export const useRequestStore = defineStore('request', {
   actions: {
     async addRequest(request: Request) {
       request.id = new Date().toISOString()
+
       this.isLoading = true
       try {
         const response = await axios.post(
-          `https://coaches-vue-36fb0-default-rtdb.firebaseio.com/requests/requests.json`,
+          `https://coaches-vue-36fb0-default-rtdb.firebaseio.com/requests/${request.coachId}.json?auth=${authStore.token}`,
           {
-            id: request.id,
             email: request.email,
             message: request.message,
             coachId: request.coachId,
@@ -38,23 +40,17 @@ export const useRequestStore = defineStore('request', {
     },
     async loadRequests() {
       this.isLoading = true
-
-      const coachStore = useCoachStore()
       try {
         const response = await axios.get(
-          'https://coaches-vue-36fb0-default-rtdb.firebaseio.com/requests/requests.json'
+          `https://coaches-vue-36fb0-default-rtdb.firebaseio.com/requests/${authStore.userId}.json?auth=${authStore.token}`
         )
+
+        if (response.status !== 200) throw new Error('Could not load data')
         if (response.status === 200 && response.data !== null) {
           const requests = Object.values(response.data) as Array<Request>
 
-          this.requests = requests.filter((request: Request) => {
-            if (request.coachId === coachStore.loggedInCoach.id) {
-              console.log(request)
-              return request
-            }
-          })
+          this.requests = requests
         }
-        if (response.status !== 200) throw new Error('Could not load data')
 
         this.isLoading = false
       } catch (err) {
