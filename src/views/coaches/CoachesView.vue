@@ -42,7 +42,10 @@ onBeforeMount(async () => {
       </div>
 
       <div class="controls">
-        <button @click="refreshCoaches">
+        <RouterLink :to="{ name: 'SignUp' }" class="button"
+          >Register as Coach</RouterLink
+        >
+        <button class="button" @click="refreshCoaches">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6"
@@ -120,12 +123,18 @@ onBeforeMount(async () => {
 <style scoped>
 .actions {
   display: flex;
-  justify-content: right;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 
   width: 100%;
 
   padding-block: var(--small-size-fluid);
+}
+
+.filter {
+  width: 100%;
 }
 
 .coaches {
@@ -139,8 +148,22 @@ onBeforeMount(async () => {
   gap: var(--medium-size-fluid);
 }
 
-.controls button {
+.controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  width: 100%;
+}
+
+.controls .button {
+  display: flex;
+  justify-content: center;
   gap: var(--extra-small-size-fluid);
+
+  width: 100%;
 
   border-bottom: 2px solid var(--accent2);
 }
@@ -170,6 +193,18 @@ onBeforeMount(async () => {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--small-size-fluid);
     align-items: stretch;
+  }
+
+  .actions,
+  .controls {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .filter,
+  .controls,
+  .controls .button {
+    width: fit-content;
   }
 }
 </style>

@@ -137,7 +137,7 @@ async function saveCoach() {
       </div>
 
       <div class="buttons">
-        <button type="submit">Submit</button>
+        <button class="button" type="submit">Submit</button>
       </div>
     </form>
   </main>

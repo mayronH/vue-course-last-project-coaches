@@ -70,7 +70,7 @@ main.content {
   color: var(--bg-dark);
 }
 
-button {
+.button {
   display: flex;
   align-items: center;
 
@@ -84,6 +84,8 @@ button {
 
   color: var(--white);
   font-size: 1rem;
+  text-decoration: none;
+  text-align: center;
 
   cursor: pointer;
 }
@@ -98,7 +100,7 @@ button {
   width: 100%;
 }
 
-.buttons button {
+.buttons .button {
   background-color: var(--accent2);
   padding: 0.5rem var(--small-size-fluid);
 

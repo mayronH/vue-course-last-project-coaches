@@ -30,6 +30,10 @@ select {
   border: none;
   border-bottom: 2px solid var(--accent2);
   padding: 0.5rem;
+
+  text-align: center;
+
+  width: 100%;
 }
 label {
   opacity: 0;

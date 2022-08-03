@@ -33,7 +33,7 @@ async function saveRequest() {
   if (result) {
     // alert('Form successfully submitted.')
     requestStore.addRequest(request.value)
-    router.push({ name: 'Requests' })
+    router.push({ name: 'Coaches' })
   }
 }
 </script>
@@ -57,9 +57,7 @@ async function saveRequest() {
     </div>
 
     <div class="buttons">
-      <button type="submit">Submit</button>
+      <button class="button" type="submit">Submit</button>
     </div>
   </form>
 </template>
-
-<style scoped></style>
