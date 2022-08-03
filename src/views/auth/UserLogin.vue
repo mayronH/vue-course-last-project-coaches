@@ -27,7 +27,8 @@ async function submitForm() {
   const result = await v$.value.$validate()
   if (result) {
     if (await authStore.login(state.email, state.password)) {
-      router.push({ name: 'Coaches' })
+      // router replace prevent from returning to the login with the back button on the browser
+      router.replace({ name: 'Coaches' })
     }
   }
 }

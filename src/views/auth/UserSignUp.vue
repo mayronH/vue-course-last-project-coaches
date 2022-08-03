@@ -29,7 +29,7 @@ async function submitForm() {
   const result = await v$.value.$validate()
   if (result) {
     if (await authStore.signUp(state.email, state.password)) {
-      router.push({ name: 'Coaches' })
+      router.replace({ name: 'Coaches' })
     }
   }
 }
