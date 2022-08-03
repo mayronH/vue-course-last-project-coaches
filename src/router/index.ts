@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 
 const routes = [
   {
@@ -36,6 +37,9 @@ const routes = [
     name: 'SignUp',
     component: () =>
       import(/* webpackChunkName: "signup" */ '../views/coaches/SignUp.vue'),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/requests',
@@ -44,6 +48,9 @@ const routes = [
       import(
         /* webpackChunkName: "requests" */ '../views/requests/RequestsView.vue'
       ),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/user/signup',
@@ -52,12 +59,18 @@ const routes = [
       import(
         /* webpackChunkName: "userSignUp" */ '../views/auth/UserSignUp.vue'
       ),
+    meta: {
+      requiresUnAuth: true,
+    },
   },
   {
     path: '/user/login',
     name: 'UserAuth',
     component: () =>
       import(/* webpackChunkName: "userAuth" */ '../views/auth/UserLogin.vue'),
+    meta: {
+      requiresUnAuth: true,
+    },
   },
 
   // 404 Page
@@ -80,4 +93,15 @@ const router = createRouter({
   },
 })
 
+router.beforeEach(function (to, from, next) {
+  const authStore = useAuthStore()
+
+  if (to.meta.requiresAuth && !authStore.userId) {
+    next({ name: 'UserAuth' })
+  } else if (to.meta.requiresUnAuth && authStore.userId) {
+    next({ name: 'Coaches' })
+  } else {
+    next()
+  }
+})
 export default router
