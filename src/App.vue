@@ -15,7 +15,7 @@ watch(
   () => authStore.didLogout,
   () => {
     if (authStore.didLogout === true) {
-      router.push({ name: 'UserAuth' })
+      router.push({ name: 'Coaches' })
     }
   }
 )
