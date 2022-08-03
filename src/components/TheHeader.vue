@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useCoachStore } from '../stores/coach'
+import { useAuthStore } from '../stores/auth'
 
 const navBtn = ref()
 
@@ -19,7 +19,11 @@ onMounted(() => {
   }
 })
 
-const coachStore = useCoachStore()
+const authStore = useAuthStore()
+
+function logout() {
+  authStore.logout()
+}
 </script>
 
 <template>
@@ -81,19 +85,24 @@ const coachStore = useCoachStore()
 
           <li role="none">
             <RouterLink
-              v-if="!coachStore.isLoggedIn"
-              :to="{ name: 'SignUp' }"
-              role="menuitem"
-              class="nav-link"
-              >Sign Up</RouterLink
-            >
-            <RouterLink
-              v-else
               :to="{ name: 'Requests' }"
               role="menuitem"
               class="nav-link"
               >Requests</RouterLink
             >
+          </li>
+
+          <li role="none">
+            <RouterLink
+              v-if="!authStore.userId"
+              :to="{ name: 'UserAuth' }"
+              role="menuitem"
+              class="nav-link"
+              >Login</RouterLink
+            >
+            <button v-else role="menuitem" class="nav-link" @click="logout">
+              Logout
+            </button>
           </li>
         </ul>
       </div>
@@ -131,16 +140,6 @@ const coachStore = useCoachStore()
   list-style: none;
   text-align: center;
 }
-.nav-link.github {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--accent);
-  color: var(--bg-dark);
-  font-weight: 600;
-  padding: 0.25rem var(--extra-small-size-fluid);
-  border-radius: var(--border-radius);
-}
 .btn-menu {
   cursor: pointer;
   color: var(--accent);
@@ -160,6 +159,12 @@ const coachStore = useCoachStore()
 .nav-link {
   color: var(--text);
   text-decoration: none;
+}
+button.nav-link {
+  background-color: transparent;
+  border: none;
+
+  cursor: pointer;
 }
 @media (min-width: 768px) {
   .nav-wrapper {

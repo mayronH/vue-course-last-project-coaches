@@ -2,6 +2,12 @@
 import { computed, reactive } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength, sameAs } from '@vuelidate/validators'
+import { useAuthStore } from '../../stores/auth'
+import { useRouter } from 'vue-router'
+import BaseSpinner from '../../components/BaseSpinner.vue'
+
+const authStore = useAuthStore()
+const router = useRouter()
 
 const state = reactive({
   email: '',
@@ -22,15 +28,19 @@ const v$ = useVuelidate(rules, state)
 async function submitForm() {
   const result = await v$.value.$validate()
   if (result) {
-    console.log(result)
+    if (await authStore.signUp(state.email, state.password)) {
+      router.push({ name: 'Coaches' })
+    }
   }
 }
 </script>
 
 <template>
   <main class="content">
-    <form class="form" @submit.prevent="submitForm">
+    <BaseSpinner v-if="authStore.isLoading"></BaseSpinner>
+    <form v-else class="form" @submit.prevent="submitForm">
       <h2>User Sign Up</h2>
+      <small v-if="authStore.error" class="error">{{ authStore.error }}</small>
       <div class="input">
         <label for="email">E-mail</label>
         <input id="email" v-model="state.email" type="email" />
@@ -71,7 +81,7 @@ async function submitForm() {
         <RouterLink :to="{ name: 'UserAuth' }" class="contact-link">
           Login
         </RouterLink>
-        <button type="submit">Sign Up</button>
+        <button class="button" type="submit">Sign Up</button>
       </div>
     </form>
   </main>
@@ -80,7 +90,11 @@ async function submitForm() {
 <style scoped>
 .buttons {
   display: flex;
+  justify-content: flex-end;
   gap: var(--small-size-fluid);
+}
+.button {
+  margin: 0;
 }
 .contact-link {
   color: var(--bg-dark);
