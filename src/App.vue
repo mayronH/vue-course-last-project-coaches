@@ -1,14 +1,24 @@
 <script setup lang="ts">
 import TheHeader from './components/TheHeader.vue'
 import TheFooter from './components/TheFooter.vue'
-import { onBeforeMount } from 'vue'
+import { onBeforeMount, watch } from 'vue'
 import { useAuthStore } from './stores/auth'
+import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
+const router = useRouter()
 
 onBeforeMount(() => {
   authStore.autoLogin()
 })
+watch(
+  () => authStore.didLogout,
+  () => {
+    if (authStore.didLogout === true) {
+      router.push({ name: 'Coaches' })
+    }
+  }
+)
 </script>
 
 <template>

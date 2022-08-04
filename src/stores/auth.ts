@@ -9,6 +9,7 @@ export const useAuthStore = defineStore('auth', {
     token: '',
     isLoading: false,
     error: '',
+    didLogout: false,
   }),
   actions: {
     async signUp(email: string, password: string) {
@@ -41,6 +42,7 @@ export const useAuthStore = defineStore('auth', {
         if (response.status === 200) {
           this.userId = response.data.localId
           this.token = response.data.idToken
+          this.didLogout = false
 
           localStorage.setItem('token', this.token)
           localStorage.setItem('userId', this.userId)
@@ -51,7 +53,7 @@ export const useAuthStore = defineStore('auth', {
           localStorage.setItem('tokenExpiration', expirationDate.toString())
 
           timer = setTimeout(() => {
-            this.logout
+            this.autoLogout()
           }, response.data.expiresIn * 1000)
 
           return true
@@ -85,7 +87,7 @@ export const useAuthStore = defineStore('auth', {
         }
 
         timer = setTimeout(() => {
-          this.logout()
+          this.autoLogout()
         }, expiresIn)
       }
 
@@ -93,6 +95,10 @@ export const useAuthStore = defineStore('auth', {
         this.userId = userId
         this.token = token
       }
+    },
+    autoLogout() {
+      this.logout()
+      this.didLogout = true
     },
     logout() {
       localStorage.removeItem('token')
