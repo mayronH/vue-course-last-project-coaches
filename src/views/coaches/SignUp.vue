@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useCoachStore } from '../../stores/coach'
 import { Coach } from '../../types'
 
 import useVuelidate from '@vuelidate/core'
 import { required, minValue } from '@vuelidate/validators'
-import { useRouter } from 'vue-router'
 
 const coachStore = useCoachStore()
 const router = useRouter()

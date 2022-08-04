@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { computed, defineAsyncComponent, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '../../stores/auth.js'
+
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import { useAuthStore } from '../../stores/auth.js'
-import { useRouter } from 'vue-router'
-import BaseSpinner from '../../components/BaseSpinner.vue'
+
+const BaseSpinner = defineAsyncComponent(
+  () => import('../../components/BaseSpinner.vue')
+)
 
 const authStore = useAuthStore()
 const router = useRouter()

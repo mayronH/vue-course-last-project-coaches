@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, ref } from 'vue'
+import { computed, defineAsyncComponent, onBeforeMount, ref } from 'vue'
 import { useCoachStore } from '../../stores/coach'
+import { useAuthStore } from '../../stores/auth'
 
 import CoachItem from '../../components/CoachItem.vue'
 import CoachFilter from '../../components/CoachFilter.vue'
-import BaseSpinner from '../../components/BaseSpinner.vue'
-import { useAuthStore } from '../../stores/auth'
+
+const BaseSpinner = defineAsyncComponent(
+  () => import('../../components/BaseSpinner.vue')
+)
 
 const coachStore = useCoachStore()
 const authStore = useAuthStore()

@@ -16,7 +16,7 @@ onBeforeMount(() => {
 
   <RouterView />
 
-  <TheFooter />
+  <TheFooter v-once />
 </template>
 
 <style>
