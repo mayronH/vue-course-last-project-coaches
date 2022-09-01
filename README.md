@@ -27,7 +27,7 @@ git clone https://github.com/mayronH/vue-course-last-project-coaches
 - Installation of dependencies
 
 ```bash
-cd vue-invoice
+cd vue-course-last-project-coaches
 
 pnpm install
 
